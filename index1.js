@@ -66,7 +66,7 @@ function playRound() {
     checkPlayerInput(playerInput);
     if(inputCheck = true) {
         let computerSelection = computerPlay();
-        console.log("computer has " + computerSelection + ". you have " + playerInput );
+        console.log(`computer has ${computerSelection}. You have ${playerInput}.`);
 
         Roundresult = calculateResult(computerSelection,playerInput)
         playerInput = false;
@@ -82,22 +82,28 @@ function playGame() {
         roundWinner = playRound();
         if(roundWinner.search("win") > -1) {
             yourScore += 1;
-        } else {
+            console.log(`${yourScore} : ${compScore}`);
+        } else if(roundWinner.search("lose") > -1){
             compScore += 1;
+            console.log(`${yourScore} : ${compScore}`);
+        } else {
+            console.log(`TIE! ${yourScore} : ${compScore}`);
         }
-        
+
         if(yourScore == 5)
         {
             console.log("Congradulations, you win!");
             resetScores();
+            return;
         } else if (compScore == 5) {
             console.log("sorry you lose it all... you suck.");
             resetScores();
+            return;
         }
         
         console.log(roundWinner);
         Round += 1;
-    } while (Round <= 5);
+    } while (yourScore <= 5 && compScore <= 5);
 }
 
 playGame();
