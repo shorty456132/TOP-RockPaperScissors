@@ -1,7 +1,15 @@
 
 let RPS = ["rock","paper","scissors"];
 let Round = 0;
+let yourScore = 0;
+let compScore = 0;
 
+
+
+function resetScores() {
+    yourScore = 0;
+    compScore = 0;
+}
 
 function computerPlay() {
     return RPS[Math.floor(Math.random()*RPS.length)];
@@ -57,26 +65,39 @@ function playRound() {
     let playerInput = prompt("type a selection. rock, paper, or scissors","").toLowerCase(); 
     checkPlayerInput(playerInput);
     if(inputCheck = true) {
-    let computerSelection = computerPlay();
-    console.log("computer has " + computerSelection + ". you have " + playerInput );
+        let computerSelection = computerPlay();
+        console.log("computer has " + computerSelection + ". you have " + playerInput );
 
-    Roundresult = calculateResult(computerSelection,playerInput)
-    playerInput = false;
+        Roundresult = calculateResult(computerSelection,playerInput)
+        playerInput = false;
     }
     return Roundresult;
 
 }
 
 function playGame() {
-    let yourScore = 0;
-    let compScore = 0;
-    let roundWinner = "";
 
-    while(Round <= 5) {
+    
+    do {
         roundWinner = playRound();
+        if(roundWinner.search("win") > -1) {
+            yourScore += 1;
+        } else {
+            compScore += 1;
+        }
+        
+        if(yourScore == 5)
+        {
+            console.log("Congradulations, you win!");
+            resetScores();
+        } else if (compScore == 5) {
+            console.log("sorry you lose it all... you suck.");
+            resetScores();
+        }
+        
         console.log(roundWinner);
         Round += 1;
-    }
+    } while (Round <= 5);
 }
 
 playGame();
